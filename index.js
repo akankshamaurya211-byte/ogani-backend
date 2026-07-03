@@ -1260,9 +1260,9 @@ app.use((error, req , res, next)=>{
     res.status(500).json({message:"Something Went wrong!"})
 });
 
-app.listen(process.env.PORT, () => console.log(`http://localhost:${process.env.PORT}/`));
+//app.listen(process.env.PORT, () => console.log(`http://localhost:${process.env.PORT}/`));
 
-// export default app;
+export default app;
 
 
 //db.employees.aggregate([{$group:{_id: "$deptId", totalEmployees:{$sum:1}}}])
