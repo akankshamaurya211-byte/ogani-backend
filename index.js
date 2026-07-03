@@ -16,6 +16,16 @@ import { title } from "process";
 import Razorpay from "razorpay";
 import crypto from "crypto"
 
+const app = express();
+app.use(express.json())
+app.use(cors({
+    origin: "http://localhost:5173",
+    credentials: true
+}));
+app.use(cookieParser());
+
+app.use("/image", express.static(path.join(process.cwd(),"uploads")));
+
     try {
         mongoose.connect("mongodb://akankshamaurya211_db_user:YC1HQFmQAaLBSeSU@ac-qmoi2tz-shard-00-00.jdz2tab.mongodb.net:27017,ac-qmoi2tz-shard-00-01.jdz2tab.mongodb.net:27017,ac-qmoi2tz-shard-00-02.jdz2tab.mongodb.net:27017/ogani?ssl=true&replicaSet=atlas-12g60l-shard-0&authSource=admin&appName=Cluster0")
         console.log("connected!!");
@@ -71,13 +81,7 @@ const wishListSchema = new mongoose.Schema({
 
 const WishList = mongoose.model("wishList", wishListSchema)
 
-const app = express();
-app.use(express.json())
-app.use(cors({
-    origin: "http://localhost:5173",
-    credentials: true
-}));
-app.use(cookieParser());
+
 
 const transporter = nodemailer.createTransport({
     service:"gmail",
@@ -686,7 +690,7 @@ app.post("/login", async (req, res) => {
             throw new Error("invalid credentials!")
 
         const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: "90d" });
-        res.cookie("jwt", token, { maxAge: 90 * 24 * 60 * 60 * 1000, httpOnly: true });
+        res.cookie("jwt", token, { maxAge: 90 * 24 * 60 * 60 * 1000, httpOnly: true, secure: true, sameSite: "None" });
         res.status(200).json({ message: "Logged In", token });
 
     } catch (error) {
@@ -787,7 +791,6 @@ app.get("/logout", (req, res) => {
 
 // });
 
-app.use("/image",express.static("./uploads"));
 
 const uploader = multer({
     storage: multer.memoryStorage()
