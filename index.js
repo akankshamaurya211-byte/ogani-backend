@@ -17,17 +17,18 @@ import Razorpay from "razorpay";
 import crypto from "crypto"
 
 const app = express();
-app.use(express.json())
+app.use(express.json());
+app.use(cookieParser());
+
 app.use(cors({
     origin: "http://localhost:5173",
     credentials: true
 }));
-app.use(cookieParser());
 
 app.use("/image", express.static(path.join(process.cwd(),"uploads")));
 
     try {
-        mongoose.connect("mongodb://akankshamaurya211_db_user:YC1HQFmQAaLBSeSU@ac-qmoi2tz-shard-00-00.jdz2tab.mongodb.net:27017,ac-qmoi2tz-shard-00-01.jdz2tab.mongodb.net:27017,ac-qmoi2tz-shard-00-02.jdz2tab.mongodb.net:27017/ogani?ssl=true&replicaSet=atlas-12g60l-shard-0&authSource=admin&appName=Cluster0")
+       await mongoose.connect("mongodb://akankshamaurya211_db_user:YC1HQFmQAaLBSeSU@ac-qmoi2tz-shard-00-00.jdz2tab.mongodb.net:27017,ac-qmoi2tz-shard-00-01.jdz2tab.mongodb.net:27017,ac-qmoi2tz-shard-00-02.jdz2tab.mongodb.net:27017/ogani?ssl=true&replicaSet=atlas-12g60l-shard-0&authSource=admin&appName=Cluster0")
         console.log("connected!!");
         
     } catch (error) {
