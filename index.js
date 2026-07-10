@@ -21,7 +21,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use(cors({
-    origin: "https://akankshagroceries-zara12.vercel.app",
+    origin: "https://akankshagroceries.vercel.app",
     credentials: true
 }));
 
